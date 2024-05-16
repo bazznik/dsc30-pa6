@@ -74,56 +74,7 @@ public class SearchEngine {
     public static void searchMyQuery(BSTree<String> searchTree, String query) {
         /* Searches the Query */
         String[] keys = query.toLowerCase().split(" ");
-        String[][] keyResults = new String[keys.length][];
-        for (int i = 0; i < keys.length; i++) {
-            keyResults[i] = searchTree.findDataList(keys[i]).toArray(new String[0]);
-        }
-        String[] intersection = keyResults[0];
-        for (int i = 1; i < keyResults.length; i++) {
-            intersection = intersection(intersection, keyResults[i]);
-        }
-        if (intersection.length > 0) {
-            System.out.println("Documents related to " + query + " are: " + Arrays.toString(intersection));
-        }
-        for (int i = 0; i < keys.length; i++) {
-            if (keyResults[i].length == 0 || Arrays.equals(keyResults[i], intersection)) {
-                continue;
-            }
-            String nonIntersectionResult = "Documents related to " + keys[i] + " are: " + Arrays.toString(keyResults[i]);
-            System.out.println(nonIntersectionResult);
-        }
-        boolean noResultsFound = intersection.length == 0 && Arrays.stream(keyResults).allMatch(arr -> arr.length == 0);
-        if (noResultsFound) {
-            System.out.println("The search yielded no results for " + query);
-        }
     }
-
-    private static String[] intersection(String[] arr1, String[] arr2) {
-        // Find the size of the intersection
-        int count = 0;
-        for (String s : arr1) {
-            if (contains(arr2, s)) {
-                count++;
-            }
-        }
-        String[] intersected = new String[count];
-        int index = 0;
-        for (String s : arr1) {
-            if (contains(arr2, s)) {
-                intersected[index++] = s;
-            }
-        }
-        return intersected;
-    }
-    private static boolean contains(String[] array, String value) {
-        for (String s : array) {
-            if (s.equals(value)) {
-                return true;
-            }
-        }
-        return false;
-    }
-
 
     /**
      * Print output of query
