@@ -57,7 +57,8 @@ public class SearchEngine {
         }
         return true;
     }
-    private static void insertIntoTree(BSTree<String> tree, String key, String value) {
+    private static void insertIntoTree
+            (BSTree<String> tree, String key, String value) {
         if (!tree.insert(key)) {
             tree.insertData(key, value);
         } else {
@@ -101,37 +102,5 @@ public class SearchEngine {
     public static void main(String[] args) {
         String fileName = args[0];
         int searchKind = Integer.parseInt(args[1]);
-        if (args.length < 3) {
-            System.out.println("Usage: java Main <file_name> <search_kind> <keyword1> <keyword2> ...");
-            return;
-        }
-        try {
-            searchKind = Integer.parseInt(args[1]);
-        } catch (NumberFormatException e) {
-            System.out.println("Search kind must be an integer.");
-            return;
-        }
-        String[] keywords = Arrays.copyOfRange(args, 2, args.length);
-        BSTree<String> movieTree = new BSTree<>();
-        BSTree<String> studioTree = new BSTree<>();
-        BSTree<String> ratingTree = new BSTree<>();
-        if (!populateSearchTrees(movieTree, studioTree, ratingTree, fileName)) {
-            System.out.println("Error reading file.");
-            return;
-        }
-        BSTree<String> searchTree = null;
-        if (searchKind == 1) {
-            searchTree = movieTree;
-        } else if (searchKind == 2) {
-            searchTree = studioTree;
-        } else if (searchKind == 3) {
-            searchTree = ratingTree;
-        } else {
-            System.out.println("Invalid search kind.");
-            return;
-        }
-        String query = String.join(" ", keywords);
-        searchMyQuery(searchTree, query);
-
     }
 }
